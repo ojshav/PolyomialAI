@@ -11,6 +11,11 @@ The application is designed to provide an AI-powered assistant that can answer q
 - **Querying**: Users can ask questions, and the application retrieves relevant information from the knowledge base to provide answers.
 - **Logging**: All interactions are logged in a MongoDB database for tracking and analysis.
 
+  
+
+https://github.com/user-attachments/assets/164f7b26-7eba-4d01-81c3-48aa10fbf0cd
+
+
 ## Requirements
 - Python 3.x
 - MongoDB
