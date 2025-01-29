@@ -17,6 +17,9 @@ The application is designed to provide an AI-powered assistant that can answer q
 
 ## Setup Instructions
 
+
+## Setup Instructions
+
 ### 1. Create a Virtual Environment
 To create a virtual environment, run the following command in your terminal:
 ```bash
@@ -45,7 +48,7 @@ Create a `.env` file in the root directory of the project and add the following 
 GROQ_API_KEY=your_groq_api_key_here
 MONGO_URI=your_mongo_uri_here
 HF_TOKEN=your_huggingface_token_here
-```bash
+```
 
 - **GROQ_API_KEY**: Your API key for the Groq service.
 - **MONGO_URI**: The connection string for your MongoDB database.
@@ -61,108 +64,3 @@ python app.py
 The application will start, and you can access it in your web browser at `http://127.0.0.1:5000`.
 
 
-
-python -m venv venv
-```
-### 2. Activate the Virtual Environment
-- On Windows:
-  ```bash
-  venv\Scripts\activate
-  ```
-- On macOS/Linux:
-  ```bash
-  source venv/bin/activate
-  ```
-
-### 3. Install Dependencies
-Install the required packages using the `requirements.txt` file:
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Set Up the `.env` File
-Create a `.env` file in the root directory of the project and add the following environment variables:
-
-```plaintext
-GROQ_API_KEY=your_groq_api_key_here
-MONGO_URI=your_mongo_uri_here
-HF_TOKEN=your_huggingface_token_here
-```bash
-python -m venv venv
-```
-### 2. Activate the Virtual Environment
-- On Windows:
-  ```bash
-  venv\Scripts\activate
-  ```
-- On macOS/Linux:
-  ```bash
-  source venv/bin/activate
-  ```
-
-### 3. Install Dependencies
-Install the required packages using the `requirements.txt` file:
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Set Up the `.env` File
-Create a `.env` file in the root directory of the project and add the following environment variables:
-
-```plaintext
-GROQ_API_KEY=your_groq_api_key_here
-MONGO_URI=your_mongo_uri_here
-HF_TOKEN=your_huggingface_token_here
-```bash
-python -m venv venv
-```
-### 2. Activate the Virtual Environment
-- On Windows:
-  ```bash
-  venv\Scripts\activate
-  ```
-- On macOS/Linux:
-  ```bash
-  source venv/bin/activate
-  ```
-
-### 3. Install Dependencies
-Install the required packages using the `requirements.txt` file:
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Set Up the `.env` File
-Create a `.env` file in the root directory of the project and add the following environment variables:
-
-```plaintext
-GROQ_API_KEY=your_groq_api_key_here
-MONGO_URI=your_mongo_uri_here
-HF_TOKEN=your_huggingface_token_here
-```bash
-python -m venv venv
-```
-### 2. Activate the Virtual Environment
-- On Windows:
-  ```bash
-  venv\Scripts\activate
-  ```
-- On macOS/Linux:
-  ```bash
-  source venv/bin/activate
-  ```
-
-### 3. Install Dependencies
-Install the required packages using the `requirements.txt` file:
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Set Up the `.env` File
-Create a `.env` file in the root directory of the project and add the following environment variables:
-
-```plaintext
-GROQ_API_KEY=your_groq_api_key_here
-MONGO_URI=your_mongo_uri_here
-HF_TOKEN=your_huggingface_token_here
-```
