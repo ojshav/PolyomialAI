@@ -17,9 +17,6 @@ The application is designed to provide an AI-powered assistant that can answer q
 
 ## Setup Instructions
 
-
-## Setup Instructions
-
 ### 1. Create a Virtual Environment
 To create a virtual environment, run the following command in your terminal:
 ```bash
