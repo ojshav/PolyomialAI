@@ -1,4 +1,4 @@
-# Project Title
+# Knowledge Assitant Bot
 
 ## Description
 This project is a Flask application that utilizes LangChain for document processing and querying. It supports various file formats and logs interactions with a MongoDB database. The application allows users to upload documents, which are then processed and stored in a vector database for efficient querying.
