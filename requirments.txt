@@ -1,0 +1,14 @@
+uv
+langchain 
+langchain-community 
+langchain-groq 
+langchainhub 
+chromadb
+flask
+pymongo
+sentence-transformers
+langchain_huggingface
+unstructured[all-docs]
+python-magic
+python-magic-bin
+jq

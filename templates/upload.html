@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Knowledge Base</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .upload-area {
+            border: 2px dashed #e5e7eb;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .upload-area:hover {
+            border-color: #2563eb;
+        }
+
+        .upload-icon {
+            font-size: 2rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-text {
+            color: #6b7280;
+        }
+
+        .file-info {
+            margin: 1rem 0;
+            padding: 0.5rem;
+            background: #f1f5f9;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .upload-button {
+            width: 100%;
+            padding: 0.75rem;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.2s;
+        }
+
+        .upload-button:hover {
+            background: #1d4ed8;
+        }
+
+        .upload-button:disabled {
+            background: #93c5fd;
+            cursor: not-allowed;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+
+        .alert-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .logs-container {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .log-entry {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+
+        .log-time {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .log-query {
+            font-weight: 500;
+            margin: 0.5rem 0;
+        }
+
+        .log-response {
+            color: #4b5563;
+        }
+
+        .log-sources {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 0.5rem;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #uploadArea {
+            position: relative;
+        }
+
+        #fileInput {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 0.5rem 1rem;
+            background: #4b5563;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .home-button:hover {
+            background: #374151;
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="home-button">Back to Chat</a>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title">Knowledge Base Management</h1>
+            </div>
+            <div class="card-content">
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <div class="upload-area" id="uploadArea">
+                        <input type="file" id="fileInput" accept=".txt,.pdf,.doc,.docx">
+                        <div class="upload-icon">📄</div>
+                        <p class="upload-text">Click or drag files to upload</p>
+                        <p class="upload-text" id="selectedFileName"></p>
+                    </div>
+                    <button type="submit" class="upload-button" id="uploadButton" disabled>Upload Document</button>
+                </form>
+                <div id="alertContainer"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Recent Interactions</h2>
+            </div>
+            <div class="card-content">
+                <div class="logs-container" id="logsContainer">
+                    <!-- Logs will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const uploadButton = document.getElementById('uploadButton');
+        const selectedFileName = document.getElementById('selectedFileName');
+        const uploadForm = document.getElementById('uploadForm');
+        const alertContainer = document.getElementById('alertContainer');
+        const logsContainer = document.getElementById('logsContainer');
+
+        fileInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                selectedFileName.textContent = `Selected: ${file.name}`;
+                uploadButton.disabled = false;
+            } else {
+                selectedFileName.textContent = '';
+                uploadButton.disabled = true;
+            }
+        });
+
+        uploadForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showAlert('error', 'Please select a file first');
+                return;
+            }
+
+            formData.append('file', file);
+            uploadButton.disabled = true;
+            uploadButton.innerHTML = '<span class="spinner"></span> Uploading...';
+
+            try {
+                const response = await fetch('/admin/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showAlert('success', `File uploaded successfully: ${result.chunks_added} chunks added`);
+                    fileInput.value = '';
+                    selectedFileName.textContent = '';
+                    uploadButton.disabled = true;
+                    // Refresh logs
+                    fetchLogs();
+                } else {
+                    throw new Error(result.error || 'Upload failed');
+                }
+            } catch (error) {
+                showAlert('error', error.message);
+            } finally {
+                uploadButton.innerHTML = 'Upload Document';
+            }
+        });
+
+        function showAlert(type, message) {
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            alertContainer.innerHTML = '';
+            alertContainer.appendChild(alert);
+            setTimeout(() => alert.remove(), 5000);
+        }
+
+        async function fetchLogs() {
+            try {
+                const response = await fetch('/admin/logs');
+                const logs = await response.json();
+                
+                logsContainer.innerHTML = logs.map(log => `
+                    <div class="log-entry">
+                        <div class="log-time">${new Date(log.timestamp).toLocaleString()}</div>
+                        <div class="log-query">${log.query}</div>
+                        <div class="log-response">${log.response}</div>
+                        <div class="log-sources">${log.sources.join(', ')}</div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error fetching logs:', error);
+            }
+        }
+    </script>
+</body>
+</html>

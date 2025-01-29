@@ -1,0 +1,16 @@
+{
+    "title": "Introduction to AI",
+    "author": "Ojshav Saxena",
+    "content": [
+      {
+        "section": "What is AI?",
+        "text": "Artificial Intelligence (AI) refers to the simulation of human intelligence in machines."
+      },
+      {
+        "section": "Applications of AI",
+        "text": "AI is used in healthcare, finance, self-driving cars, and more."
+      }
+    ],
+    "published": "2025-01-29"
+  }
+  
